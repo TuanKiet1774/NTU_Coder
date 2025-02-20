@@ -22,9 +22,14 @@ def giai_ma_ceasar(ban_ma):
         tu_ban_thu = set(ban_thu.upper().split())
         
         if tu_ban_thu & tu_dien:  
+            #print(khoa) #Khóa chính xác
             return ban_thu
     
     return "0"
 
 ban_ma = input().strip()
 print(giai_ma_ceasar(ban_ma))
+
+#Ví dụ: 
+#Đoạn mã: Fkdr edq
+#Kết quả: Chao ban
