@@ -8,6 +8,7 @@ int main()
 	char c[1000];
 	cin >> c;
 	cin >> k;
+	
 	int n = strlen(c);
 	for(int i = 0; i<n; i++)
 	{
@@ -15,7 +16,7 @@ int main()
 		if(97 <= temp && temp <= 122)
 			c[i] = char(temp);
 		else if(temp < 97)
-				c[i] = char(temp + 26);
+			c[i] = char(temp + 26);
 	}
 	cout << c;
 }
