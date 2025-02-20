@@ -6,6 +6,7 @@ def giai_ma_ceasar(ban_ma):
     def giai_ma_voi_khoa(ban_ma, khoa):
         ban_ro = ""
         for ky_tu in ban_ma:
+            # Lấy vị trí của ký tự đó trong bảng chữ cái
             vt_kth = ord(ky_tu) - ord('A')
             vt_ktt = ord(ky_tu) - ord('a')
             if 'A' <= ky_tu <= 'Z':
