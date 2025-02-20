@@ -27,7 +27,7 @@ def giai_ma_ceasar(ban_ma):
     
     return "0"
 
-ban_ma = input().strip()
+ban_ma = input().strip() #strip() loại bỏ các khoảng trắng thừa ở đầu và cuối 
 print(giai_ma_ceasar(ban_ma))
 
 #Ví dụ: 
