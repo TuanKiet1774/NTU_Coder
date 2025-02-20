@@ -16,8 +16,6 @@ int main()
 			c[i] = char(temp);
 		else if(temp < 97)
 				c[i] = char(temp + 26);
-		else if(temp > 122)
-				c[i] = char(temp - 26);
 	}
 	cout << c;
 }
