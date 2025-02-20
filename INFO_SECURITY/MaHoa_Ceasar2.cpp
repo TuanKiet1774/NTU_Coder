@@ -20,3 +20,8 @@ int main()
 	}
 	cout << c;
 }
+
+//Ví dụ: 
+//Đoạn mã: wyvnyhttpun
+//Khóa: 7
+//Kết quả: programming
