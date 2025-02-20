@@ -24,3 +24,7 @@ int main() {
     cout << c;
 }
 
+//Ví dụ: 
+//Văn bản: Doc lap - Tu do - Hanh phuc
+//Khóa: 4
+//Đoạn mã: Hsg pet - Xy hs - Lerl tlyg
