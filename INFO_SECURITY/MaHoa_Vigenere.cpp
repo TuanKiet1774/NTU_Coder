@@ -3,8 +3,9 @@
 #define max 1000
 using namespace std;
 
-void MaHoa_Vigenere(char text[], char k[], char Ma[]) 
+void MaHoa_Vigenere(char text[], char k[]) 
 {
+	char Ma[max];
 	cin >> text;
 	cin >> k;
 	
@@ -22,14 +23,14 @@ void MaHoa_Vigenere(char text[], char k[], char Ma[])
         Ma[i] = (P + C) % 26 + 'A'; // C = (P + K) % 26
     }
     Ma[textLen] = '\0';
+    cout << Ma;
 }
 
 int main() 
 {
-    char text[max], k[max], Ma[max];
+    char text[max], k[max];
     
-    MaHoa_Vigenere(text, k, Ma);
-    cout << Ma;
+    MaHoa_Vigenere(text, k);
 }
 
 //Ví dụ
