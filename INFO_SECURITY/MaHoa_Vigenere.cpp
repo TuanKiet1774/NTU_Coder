@@ -31,3 +31,8 @@ int main()
     MaHoa_Vigenere(text, k, Ma);
     cout << Ma;
 }
+
+//Ví dụ
+//Văn bản: WEAREDISCOVEREDSAVEYOURSELF
+//Khóa: DECEPTIVE
+//Mã hóa: ZICVTWQNGRZGVTWAVZHCQYGLMGJ
