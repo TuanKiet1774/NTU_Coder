@@ -49,3 +49,8 @@ key = input().strip()
 
 ban_ma = MaHoa_HoanVi(text, key)
 print(ban_ma)
+
+#Ví dụ
+#Bản rõ: WEAREDISCOVERED
+#Khóa: QUITE
+#Mã: EODASRWDVRCEEIE
