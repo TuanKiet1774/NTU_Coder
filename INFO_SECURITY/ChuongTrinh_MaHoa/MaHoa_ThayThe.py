@@ -148,3 +148,5 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = MaHoa_ThayThe(root)
     root.mainloop()
+
+#Tác giả chính: Vĩnh Thuận 
