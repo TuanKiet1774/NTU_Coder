@@ -25,3 +25,11 @@ final_output = iv + ciphertext
 # Xuất kết quả
 print(len(final_output))
 print(" ".join(map(str, final_output)))
+
+#Ví dụ
+# hello123 (khóa)
+#5 (số byte bản rõ)
+#1 2 3 4 5 (bản rõ)
+#Kết quả
+#16 (chiều dài của dãy byte bản mã)
+#20 174 102 32 253 235 77 144 180 7 6 249 198 83 229 84 (số nguyên dạng thập phân của dãy byte của bản mã)
