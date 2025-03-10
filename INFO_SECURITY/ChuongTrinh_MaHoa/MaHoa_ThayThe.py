@@ -149,4 +149,4 @@ if __name__ == "__main__":
     app = MaHoa_ThayThe(root)
     root.mainloop()
 
-#Tác giả chính: Vĩnh Thuận 
+#Tác giả chính: Vĩnh Thuận (https://github.com/vinhthuan3108/)
