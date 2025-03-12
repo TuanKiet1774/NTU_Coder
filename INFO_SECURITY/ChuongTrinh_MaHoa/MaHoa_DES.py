@@ -6,7 +6,7 @@ from Crypto.Util.Padding import pad, unpad
 from Crypto.Random import get_random_bytes
 import base64
 
-class DESEncryptionApp:
+class AppMaHoa:
     def __init__(self, root):
         self.root = root
         self.root.title("Mã Hóa Des")
@@ -17,9 +17,9 @@ class DESEncryptionApp:
         self.input_file_path = None
         self.output_file_path = None
         
-        self.create_widgets()
+        self.tao_giao_dien()
         
-    def create_widgets(self):
+    def tao_giao_dien(self):
         # Frame chính
         main_frame = ttk.Frame(self.root, padding=20)
         main_frame.pack(fill=tk.BOTH, expand=True)
@@ -36,7 +36,7 @@ class DESEncryptionApp:
         input_entry = ttk.Entry(input_frame, textvariable=self.input_path_var, width=50)
         input_entry.grid(row=0, column=0, padx=5, pady=5)
         
-        browse_button = ttk.Button(input_frame, text="Duyệt...", command=self.browse_input_file)
+        browse_button = ttk.Button(input_frame, text="Duyệt...", command=self.duyet_file)
         browse_button.grid(row=0, column=1, padx=5, pady=5)
         
         # Hiển thị thông tin file
@@ -55,14 +55,14 @@ class DESEncryptionApp:
         key_button_frame = ttk.Frame(key_frame)
         key_button_frame.grid(row=0, column=1, padx=5, pady=5)
         
-        generate_key_button = ttk.Button(key_button_frame, text="Tạo khóa", command=self.generate_key, width=10)
-        generate_key_button.grid(row=0, column=0, padx=2)
+        tao_khoa_button = ttk.Button(key_button_frame, text="Tạo khóa", command=self.tao_khoa, width=10)
+        tao_khoa_button.grid(row=0, column=0, padx=2)
         
-        save_key_button = ttk.Button(key_button_frame, text="Lưu khóa", command=self.save_key, width=10)
-        save_key_button.grid(row=0, column=1, padx=2)
+        luu_khoa_button = ttk.Button(key_button_frame, text="Lưu khóa", command=self.luu_khoa, width=10)
+        luu_khoa_button.grid(row=0, column=1, padx=2)
         
-        load_key_button = ttk.Button(key_button_frame, text="Tải khóa", command=self.load_key, width=10)
-        load_key_button.grid(row=0, column=2, padx=2)
+        tai_khoa_button = ttk.Button(key_button_frame, text="Tải khóa", command=self.tai_khoa, width=10)
+        tai_khoa_button.grid(row=0, column=2, padx=2)
         
         # File đầu ra
         output_frame = ttk.LabelFrame(main_frame, text="File đầu ra", padding=10)
@@ -79,7 +79,7 @@ class DESEncryptionApp:
         output_entry = ttk.Entry(output_frame, textvariable=self.output_path_var, width=50)
         output_entry.grid(row=1, column=0, columnspan=2, padx=5, pady=5)
         
-        save_button = ttk.Button(output_frame, text="Chọn thư mục...", command=self.select_output_directory)
+        save_button = ttk.Button(output_frame, text="Chọn thư mục...", command=self.cho_luu)
         save_button.grid(row=1, column=2, padx=5, pady=5)
         
         # Chế độ mã hóa
@@ -97,10 +97,10 @@ class DESEncryptionApp:
         action_frame = ttk.Frame(main_frame)
         action_frame.grid(row=5, column=0, columnspan=3, pady=15)
         
-        encrypt_button = ttk.Button(action_frame, text="Mã hóa", command=self.encrypt_file, width=15)
+        encrypt_button = ttk.Button(action_frame, text="Mã hóa", command=self.ma_hoa, width=15)
         encrypt_button.grid(row=0, column=0, padx=10)
         
-        decrypt_button = ttk.Button(action_frame, text="Giải mã", command=self.decrypt_file, width=15)
+        decrypt_button = ttk.Button(action_frame, text="Giải mã", command=self.giai_ma, width=15)
         decrypt_button.grid(row=0, column=1, padx=10)
         
         # Thanh tiến trình
@@ -114,7 +114,7 @@ class DESEncryptionApp:
         status_bar = ttk.Label(main_frame, textvariable=self.status_var, relief=tk.SUNKEN, anchor=tk.W)
         status_bar.grid(row=7, column=0, columnspan=3, sticky="ew", pady=5)
         
-    def browse_input_file(self):
+    def duyet_file(self):
         filename = filedialog.askopenfilename(title="Chọn file cần mã hóa/giải mã", filetypes=[("Tất cả các file", "*.*")])
         if filename:
             self.input_file_path = filename
@@ -122,7 +122,7 @@ class DESEncryptionApp:
             
             # Hiển thị thông tin file
             file_size = os.path.getsize(filename)
-            size_str = self.format_file_size(file_size)
+            size_str = self.dinh_dang_kich_thuoc(file_size)
             file_name = os.path.basename(filename)
             self.file_info_var.set(f"File: {file_name} - Kích thước: {size_str}")
             
@@ -132,7 +132,7 @@ class DESEncryptionApp:
             
             # Đề xuất tên file mới với suffix
             if not self.output_name_var.get():
-                if self.is_encrypted_file(filename):
+                if self.file_mahoa(filename):
                     # Nếu tên file có vẻ đã được mã hóa, đề xuất tên giải mã
                     suggested_name = f"{file_name.replace('_encrypted', '')}{file_ext}"
                 else:
@@ -140,12 +140,12 @@ class DESEncryptionApp:
                     suggested_name = f"{file_name}_encrypted{file_ext}"
                 self.output_name_var.set(suggested_name)
     
-    def is_encrypted_file(self, filename):
+    def file_mahoa(self, filename):
         # Kiểm tra xem file có vẻ đã được mã hóa hay chưa dựa trên tên
         base_name = os.path.basename(filename)
         return "_encrypted" in base_name
     
-    def format_file_size(self, size_bytes):
+    def dinh_dang_kich_thuoc(self, size_bytes):
         """Format kích thước file từ byte sang KB, MB, GB"""
         if size_bytes < 1024:
             return f"{size_bytes} bytes"
@@ -156,22 +156,22 @@ class DESEncryptionApp:
         else:
             return f"{size_bytes / (1024 * 1024 * 1024):.2f} GB"
     
-    def select_output_directory(self):
+    def cho_luu(self):
         directory = filedialog.askdirectory(title="Chọn thư mục lưu file đầu ra")
         if directory:
             self.output_path_var.set(directory)
             
             # Cập nhật đường dẫn đầy đủ của file đầu ra
-            self.update_output_file_path()
+            self.cap_nhat_link_file()
     
-    def update_output_file_path(self):
+    def cap_nhat_link_file(self):
         output_dir = self.output_path_var.get()
         output_name = self.output_name_var.get()
         
         if output_dir and output_name:
             self.output_file_path = os.path.join(output_dir, output_name)
     
-    def generate_key(self):
+    def tao_khoa(self):
         # DES yêu cầu khóa 8 byte (64 bit)
         self.key = get_random_bytes(8)
         # Hiển thị khóa ở dạng base64 cho người dùng
@@ -179,7 +179,7 @@ class DESEncryptionApp:
         self.key_var.set(key_b64)
         self.status_var.set("Đã tạo khóa mới")
     
-    def save_key(self):
+    def luu_khoa(self):
         if not self.key_var.get():
             messagebox.showerror("Lỗi", "Không có khóa để lưu! Vui lòng tạo hoặc nhập khóa trước.")
             return
@@ -200,7 +200,7 @@ class DESEncryptionApp:
                 messagebox.showerror("Lỗi", f"Không thể lưu khóa: {str(e)}")
                 self.status_var.set(f"Lỗi khi lưu khóa: {str(e)}")
     
-    def load_key(self):
+    def tai_khoa(self):
         key_file = filedialog.askopenfilename(
             title="Tải khóa",
             filetypes=[("Key files", "*.key"), ("Text files", "*.txt"), ("All files", "*.*")]
@@ -223,7 +223,7 @@ class DESEncryptionApp:
                 messagebox.showerror("Lỗi", f"Không thể đọc file: {str(e)}")
                 self.status_var.set(f"Lỗi khi đọc file khóa: {str(e)}")
     
-    def get_key(self):
+    def lay_khoa(self):
         if not self.key_var.get():
             messagebox.showerror("Lỗi", "Vui lòng tạo hoặc nhập khóa mã hóa!")
             return None
@@ -258,14 +258,14 @@ class DESEncryptionApp:
         
         return None
     
-    def encrypt_file(self):
+    def ma_hoa(self):
         # Cập nhật đường dẫn file đầu ra trước khi mã hóa
-        self.update_output_file_path()
+        self.cap_nhat_link_file()
         
-        if not self.validate_inputs():
+        if not self.ktra_file():
             return
         
-        key = self.get_key()
+        key = self.lay_khoa()
         if not key:
             return
         
@@ -305,8 +305,8 @@ class DESEncryptionApp:
             
             # Hiển thị kích thước file trước và sau khi mã hóa
             encrypted_size = os.path.getsize(self.output_file_path)
-            size_before = self.format_file_size(file_size)
-            size_after = self.format_file_size(encrypted_size)
+            size_before = self.dinh_dang_kich_thuoc(file_size)
+            size_after = self.dinh_dang_kich_thuoc(encrypted_size)
             
             messagebox.showinfo("Thành công", 
                 f"Đã mã hóa file thành công!\n\n"
@@ -318,14 +318,14 @@ class DESEncryptionApp:
             self.status_var.set(f"Lỗi: {str(e)}")
             messagebox.showerror("Lỗi", f"Không thể mã hóa file: {str(e)}")
     
-    def decrypt_file(self):
+    def giai_ma(self):
         # Cập nhật đường dẫn file đầu ra trước khi giải mã
-        self.update_output_file_path()
+        self.cap_nhat_link_file()
         
-        if not self.validate_inputs():
+        if not self.ktra_file():
             return
         
-        key = self.get_key()
+        key = self.lay_khoa()
         if not key:
             return
         
@@ -362,8 +362,8 @@ class DESEncryptionApp:
             # Hiển thị kích thước file trước và sau khi giải mã
             encrypted_size = os.path.getsize(self.input_file_path)
             decrypted_size = os.path.getsize(self.output_file_path)
-            size_before = self.format_file_size(encrypted_size)
-            size_after = self.format_file_size(decrypted_size)
+            size_before = self.dinh_dang_kich_thuoc(encrypted_size)
+            size_after = self.dinh_dang_kich_thuoc(decrypted_size)
             
             messagebox.showinfo("Thành công", 
                 f"Đã giải mã file thành công!\n\n"
@@ -375,7 +375,7 @@ class DESEncryptionApp:
             self.status_var.set(f"Lỗi: {str(e)}")
             messagebox.showerror("Lỗi", f"Không thể giải mã file: {str(e)}")
     
-    def validate_inputs(self):
+    def ktra_file(self):
         # Kiểm tra file đầu vào
         if not self.input_file_path or not os.path.exists(self.input_file_path):
             messagebox.showerror("Lỗi", "Vui lòng chọn file đầu vào hợp lệ!")
@@ -392,7 +392,7 @@ class DESEncryptionApp:
             return False
         
         # Kiểm tra đường dẫn đầy đủ của file đầu ra
-        self.update_output_file_path()
+        self.cap_nhat_link_file()
         
         # Kiểm tra xem file đầu ra đã tồn tại chưa
         if os.path.exists(self.output_file_path):
@@ -405,5 +405,5 @@ class DESEncryptionApp:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = DESEncryptionApp(root)
+    app = AppMaHoa(root)
     root.mainloop()
