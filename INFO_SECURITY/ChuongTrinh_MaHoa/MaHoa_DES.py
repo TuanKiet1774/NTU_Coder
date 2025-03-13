@@ -10,10 +10,11 @@ class AppMaHoa:
     def __init__(self, root):
         self.root = root
         self.root.title("Mã Hóa Des")
-        self.root.geometry("600x500")  # Tăng kích thước để chứa nhiều tính năng hơn
+        self.root.geometry("600x650")  # Tăng kích thước để chứa nhiều tính năng hơn
         self.root.resizable(False, False)
         
         self.key = None
+        self.iv = None
         self.input_file_path = None
         self.output_file_path = None
         
@@ -64,9 +65,29 @@ class AppMaHoa:
         tai_khoa_button = ttk.Button(key_button_frame, text="Tải khóa", command=self.tai_khoa, width=10)
         tai_khoa_button.grid(row=0, column=2, padx=2)
         
+        # Khung IV (Initialization Vector) - Ban đầu ẩn
+        self.iv_frame = ttk.LabelFrame(main_frame, text="IV (Initialization Vector)", padding=10)
+        self.iv_frame.grid(row=3, column=0, columnspan=3, sticky="ew", pady=5)
+        self.iv_frame.grid_remove()  # Ẩn ban đầu, chỉ hiển thị khi chọn CBC
+        
+        self.iv_var = tk.StringVar()
+        iv_entry = ttk.Entry(self.iv_frame, textvariable=self.iv_var, width=50)
+        iv_entry.grid(row=0, column=0, padx=5, pady=5)
+        
+        iv_button_frame = ttk.Frame(self.iv_frame)
+        iv_button_frame.grid(row=0, column=1, padx=5, pady=5)
+        
+        tao_iv_button = ttk.Button(iv_button_frame, text="Tạo IV", command=self.tao_iv, width=10)
+        tao_iv_button.grid(row=0, column=0, padx=2)
+        
+        # Thêm lưu ý về IV
+        iv_note = ttk.Label(self.iv_frame, text="IV sẽ được tự động tạo khi mã hóa và được đọc từ file khi giải mã", 
+                           foreground="gray", font=("Arial", 9, "italic"))
+        iv_note.grid(row=1, column=0, columnspan=2, sticky="w", padx=5)
+        
         # File đầu ra
         output_frame = ttk.LabelFrame(main_frame, text="File đầu ra", padding=10)
-        output_frame.grid(row=3, column=0, columnspan=3, sticky="ew", pady=5)
+        output_frame.grid(row=4, column=0, columnspan=3, sticky="ew", pady=5)
         
         output_name_label = ttk.Label(output_frame, text="Tên file:")
         output_name_label.grid(row=0, column=0, padx=5, pady=5, sticky="w")
@@ -85,17 +106,21 @@ class AppMaHoa:
         # Chế độ mã hóa
         self.encryption_mode = tk.StringVar(value="ECB")
         mode_frame = ttk.LabelFrame(main_frame, text="Chế độ mã hóa", padding=10)
-        mode_frame.grid(row=4, column=0, columnspan=3, sticky="ew", pady=5)
+        mode_frame.grid(row=5, column=0, columnspan=3, sticky="ew", pady=5)
         
-        ecb_radio = ttk.Radiobutton(mode_frame, text="ECB (Electronic Codebook)", variable=self.encryption_mode, value="ECB")
+        ecb_radio = ttk.Radiobutton(mode_frame, text="ECB (Electronic Codebook)", 
+                                    variable=self.encryption_mode, value="ECB", 
+                                    command=self.toggle_iv_visibility)
         ecb_radio.grid(row=0, column=0, padx=5, pady=5, sticky="w")
         
-        cbc_radio = ttk.Radiobutton(mode_frame, text="CBC (Cipher Block Chaining)", variable=self.encryption_mode, value="CBC")
+        cbc_radio = ttk.Radiobutton(mode_frame, text="CBC (Cipher Block Chaining)", 
+                                    variable=self.encryption_mode, value="CBC", 
+                                    command=self.toggle_iv_visibility)
         cbc_radio.grid(row=0, column=1, padx=5, pady=5, sticky="w")
         
         # Nút thao tác
         action_frame = ttk.Frame(main_frame)
-        action_frame.grid(row=5, column=0, columnspan=3, pady=15)
+        action_frame.grid(row=6, column=0, columnspan=3, pady=15)
         
         encrypt_button = ttk.Button(action_frame, text="Mã hóa", command=self.ma_hoa, width=15)
         encrypt_button.grid(row=0, column=0, padx=10)
@@ -103,17 +128,29 @@ class AppMaHoa:
         decrypt_button = ttk.Button(action_frame, text="Giải mã", command=self.giai_ma, width=15)
         decrypt_button.grid(row=0, column=1, padx=10)
         
-        # Thanh tiến trình
-        self.progress_var = tk.DoubleVar()
-        progress_bar = ttk.Progressbar(main_frame, variable=self.progress_var, maximum=100)
-        progress_bar.grid(row=6, column=0, columnspan=3, sticky="ew", pady=5)
-        
         # Thanh trạng thái
         self.status_var = tk.StringVar()
         self.status_var.set("Sẵn sàng")
         status_bar = ttk.Label(main_frame, textvariable=self.status_var, relief=tk.SUNKEN, anchor=tk.W)
-        status_bar.grid(row=7, column=0, columnspan=3, sticky="ew", pady=5)
-        
+        status_bar.grid(row=8, column=0, columnspan=3, sticky="ew", pady=5)
+    
+    def toggle_iv_visibility(self):
+        """Hiển thị/ẩn khung IV dựa trên chế độ mã hóa được chọn"""
+        if self.encryption_mode.get() == "CBC":
+            self.iv_frame.grid()
+            # Tự động tạo IV mới nếu chưa có
+            if not self.iv_var.get():
+                self.tao_iv()
+        else:
+            self.iv_frame.grid_remove()
+    
+    def tao_iv(self):
+        """Tạo IV mới và hiển thị ở dạng base64"""
+        self.iv = get_random_bytes(8)  # DES block size là 8 bytes
+        iv_b64 = base64.b64encode(self.iv).decode('utf-8')
+        self.iv_var.set(iv_b64)
+        self.status_var.set("Đã tạo IV mới")
+    
     def duyet_file(self):
         filename = filedialog.askopenfilename(title="Chọn file cần mã hóa/giải mã", filetypes=[("Tất cả các file", "*.*")])
         if filename:
@@ -240,6 +277,25 @@ class AppMaHoa:
             messagebox.showerror("Lỗi", "Khóa không hợp lệ! Vui lòng nhập khóa ở định dạng Base64 hoặc tạo khóa mới.")
             return None
     
+    def lay_iv(self):
+        """Lấy IV từ ô nhập liệu hoặc tạo IV mới nếu cần"""
+        if self.encryption_mode.get() != "CBC":
+            return None
+            
+        if not self.iv_var.get():
+            self.tao_iv()
+            
+        try:
+            iv_input = self.iv_var.get()
+            if self.iv and iv_input == base64.b64encode(self.iv).decode('utf-8'):
+                return self.iv
+                
+            return base64.b64decode(iv_input)
+        except:
+            messagebox.showerror("Lỗi", "IV không hợp lệ! Tạo IV mới.")
+            self.tao_iv()
+            return self.iv
+    
     def get_cipher(self, key, encrypt=True):
         mode = self.encryption_mode.get()
         
@@ -248,8 +304,8 @@ class AppMaHoa:
         elif mode == "CBC":
             # Với CBC cần IV (Initialization Vector)
             if encrypt:
-                # Khi mã hóa, tạo IV mới
-                iv = get_random_bytes(8)  # DES block size là 8 bytes
+                # Khi mã hóa, lấy IV từ giao diện hoặc tạo IV mới
+                iv = self.lay_iv()
                 cipher = DES.new(key, DES.MODE_CBC, iv)
                 return cipher, iv
             else:
@@ -289,10 +345,16 @@ class AppMaHoa:
                 cipher = DES.new(key, DES.MODE_ECB)
                 encrypted_data = cipher.encrypt(padded_data)
             else:  # CBC mode
-                # Tạo cipher DES với chế độ CBC
-                iv = get_random_bytes(8)
+                # Tạo cipher DES với chế độ CBC, sử dụng IV từ giao diện
+                iv = self.lay_iv()
                 cipher = DES.new(key, DES.MODE_CBC, iv)
                 encrypted_data = cipher.encrypt(padded_data)
+                
+                # Hiển thị IV được sử dụng (có thể đã thay đổi nếu người dùng đã nhập IV mới)
+                if iv:
+                    iv_b64 = base64.b64encode(iv).decode('utf-8')
+                    self.iv_var.set(iv_b64)
+                    self.iv = iv
             
             # Ghi dữ liệu đã mã hóa ra file
             with open(self.output_file_path, 'wb') as file:
@@ -347,6 +409,11 @@ class AppMaHoa:
                 # Đọc IV từ 8 byte đầu tiên của file
                 iv = encrypted_data[:8]
                 encrypted_data = encrypted_data[8:]  # Phần còn lại là dữ liệu đã mã hóa
+                
+                # Hiển thị IV đã đọc từ file
+                iv_b64 = base64.b64encode(iv).decode('utf-8')
+                self.iv_var.set(iv_b64)
+                self.iv = iv
                 
                 # Tạo cipher với IV đã đọc
                 cipher = DES.new(key, DES.MODE_CBC, iv)
