@@ -23,3 +23,7 @@ int main()
     cout << modulo(a, x, n);
 }
 
+//Ví dụ
+//7 16 11
+//Kết quả
+//4
