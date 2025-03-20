@@ -49,8 +49,11 @@ int main()
 
 //Ví dụ: 
 //11 3 3 17
-//Kết quả
+//Kết quả 
 //3 33
 //7 33
-//8
+//8 
 //17
+//Mã hóa chứng thực
+//C = M^d mod N
+//BM = C^e mod N
