@@ -54,6 +54,7 @@ int main()
 //7 33
 //8 
 //17
+
 //Mã hóa chứng thực
 //C = M^d mod N
 //BM = C^e mod N
