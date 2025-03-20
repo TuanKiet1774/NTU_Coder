@@ -19,7 +19,13 @@ int main()
 	int a2 = 0, b2 = 1;
 	
 	int kq = gcdx(a3, b3, a2, b2);
-	if(kq > 0) cout << kq;
+	if(kq > 0) 
+	    cout << kq;
 	else
-		cout << kq + n; 
+	    cout << kq + n; 
 }
+
+//Ví dụ
+//13 33
+//Kết quả
+//28
