@@ -13,7 +13,7 @@ int gcdx(int a3, int b3, int a2, int b2)
 long long modulo(long long a, long long x, long long n) 
 {
     if (x == 0) 
-		return 1; 
+	return 1; 
     
     long long temp = modulo(a, x / 2, n);
     long long kq;
@@ -46,3 +46,11 @@ int main()
 	cout << C << endl;
 	cout << BM;
 }
+
+//Ví dụ: 
+//11 3 3 17
+//Kết quả
+//3 33
+//7 33
+//8
+//17
