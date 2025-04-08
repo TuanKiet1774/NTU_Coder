@@ -20,7 +20,9 @@ int main()
 {
     long long a, x, n;
     cin >> a >> x >> n;
-    cout << modulo(a, x, n);
+    int m = modulo(a, x, n);
+    if(m < 0) cout << m + n;
+    else cout << m;
 }
 
 //Ví dụ
