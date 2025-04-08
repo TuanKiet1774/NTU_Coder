@@ -12,11 +12,10 @@ int main()
 	int n = strlen(c);
 	for(int i = 0; i<n; i++)
 	{
-		int temp = c[i] - k;
-		if(97 <= temp && temp <= 122)
-			c[i] = char(temp);
-		else if(temp < 97)
-			c[i] = char(temp + 26);
+		char temp = c[i] - k;
+		if('a' <= temp && temp <= 'z')
+			c[i] = temp;
+		else c[i] = temp + 26;
 	}
 	cout << c;
 }
