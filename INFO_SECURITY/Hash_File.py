@@ -20,5 +20,5 @@ print(sha256.hexdigest())
 #Ví dụ
 #input: https://64cntt3.ntucoder.net/ckfinder/userfiles/files/LoremIpsum.txt
 #output:
-#Giá trị MD5: f25a2fc72690b780b2a14e140ef6a9e0
-#Giá trị SHA1: e4ad93ca07acb8d908a3aa41e920ea4f4ef4f26e7f86cf8291c5db289780a5ae
+#Giá trị MD5: 4299bec5205abc671e01d3d1cddb5fc1
+#Giá trị SHA1: 175c7c1cb973a0b8960b9d9f76be13388e67cb256db15e888f3faedbd5db952a
