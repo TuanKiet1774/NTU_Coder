@@ -1,0 +1,28 @@
+1. Tải OpenSSL: https://slproweb.com/products/Win32OpenSSL.html
+
+2. Tạo khóa riêng (private key):openssl genpkey -algorithm RSA -out tenfile.key -aes256
+Sau khi nhập thì sẽ hiển thị:
+ + Enter PEM pass phrase: (Nhập mật khẩu mình muốn)
+ + Verifying - Enter PEM pass phrase: (Nhập mật khẩu mình muốn)
+
+3. Tạo chứng chỉ X.509 self-signed: openssl req -new -x509 -key tenfile.key -out tenfile.crt -days 365
+Sau khi nhập thì sẽ hiển thị các mục điền thông tin:
+ + Country Name (2 letter code) [AU]:VN
+ + State or Province Name (full name) [Some-State]:Tinh Khanh Hoa
+ + Locality Name (eg, city) []:Thanh Pho Nha Trang
+ + Organization Name (eg, company) [Internet Widgits Pty Ltd]:Truong Dai Hoc Nha Trang
+ + Organizational Unit Name (eg, section) []:Khoa Cong Nghe Thong Tin
+ + Common Name (e.g. server FQDN or YOUR name) []:64131060
+ + Email Address []:kiet.pt.64cntt@ntu.edu.vn
+
+4. Tạo file PKCS#12 (PFX): openssl pkcs12 -export -out tenfile.p12 -inkey tenfile.key -in tenfile.crt 
+Sau khi nhập thì sẽ hiển thị:
+ + Enter pass phrase for tenfile.key: (Nhập mật khẩu đã tạo)
+ + Enter Export Password: (Nhập mật khẩu đã tạo)
+ + Verifying - Enter Export Password: (Nhập mật khẩu đã tạo)
+
+Sau khi tạo xong thì kết quả sẽ là một file tenfile.p12 có type là Personal Information Exchange
+
+*Tạo mật khẩu chung cho tất cả
+*Nếu không tìm thấy file kết quả (Chuyển đến thư mục dễ tìm (Downloads)): move tenfile.p12 %HOMEPATH%\Downloads\ 
+
