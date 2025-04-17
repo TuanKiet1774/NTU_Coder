@@ -21,8 +21,10 @@ Sau khi nhập thì sẽ hiển thị:
  + Enter Export Password: (Nhập mật khẩu đã tạo)
  + Verifying - Enter Export Password: (Nhập mật khẩu đã tạo)
 
-Sau khi tạo xong thì kết quả sẽ là một file tenfile.p12 có type là Personal Information Exchange
+5. Sau khi tạo xong thì kết quả sẽ là một file tenfile.p12 có type là Personal Information Exchange
+ + Click vào tenfile.p12 đó để import chữ ký
+ + Chọn Current User -> Next -> Next -> Nhập mật khẩu đã tạo 
 
 *Tạo mật khẩu chung cho tất cả
-*Nếu không tìm thấy file kết quả (Chuyển đến thư mục dễ tìm (Downloads)): move tenfile.p12 %HOMEPATH%\Downloads\ 
+*Nếu không tìm thấy file kết quả tenfile.p12 (Chuyển đến thư mục dễ tìm (Downloads)): move tenfile.p12 %HOMEPATH%\Downloads\ 
 
