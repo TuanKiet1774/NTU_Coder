@@ -1,29 +1,25 @@
 #include <iostream>
-#include <string.h>
+#include <cstring>
 using namespace std;
 
 int main() {
-    char c[100];
+    char c[101];
     int k;
-    gets(c);
-    cin >> k; 
 
+    cin.getline(c, 101); 
+    cin >> k;  
+    
     for (int i = 0; c[i] != '\0'; i++) 
-    {
-        if (c[i] >= 'A' && c[i] <= 'Z')
-	{  
-            c[i] += k;
-            if (c[i] > 'Z') c[i] -= 26;
-        } 
-        else if (c[i] >= 'a' && c[i] <= 'z') 
-	{  
-            c[i] += k;
-            if (c[i] > 'z') c[i] -= 26;  
-        }
+	{
+        if (c[i] >= 'A' && c[i] <= 'Z') 
+			c[i] = 'A' + (c[i] - 'A' + k) % 26;
+		else if (c[i] >= 'a' && c[i] <= 'z') 
+			c[i] = 'a' + (c[i] - 'a' + k) % 26;
     }
-    cout << c;
-}
 
+    cout << c << endl;
+}
+    
 //Ví dụ: 
 //Văn bản: Doc lap - Tu do - Hanh phuc
 //Khóa: 4
