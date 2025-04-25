@@ -1,3 +1,5 @@
+Tạo Chứng Thư Trên CMD
+
 1. Tải OpenSSL: https://slproweb.com/products/Win32OpenSSL.html
 
 2. Tạo khóa riêng (private key):openssl genpkey -algorithm RSA -out tenfile.key -aes256
