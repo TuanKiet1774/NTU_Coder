@@ -1,3 +1,4 @@
+#Tham khảo mạng và chat
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from PIL import Image, ImageTk
