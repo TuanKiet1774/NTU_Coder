@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Máy tính</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin-top: 50px;
+    }
+    .dong {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 10px;
+    }
+    input {
+      width: 200px;
+      height: 40px;
+      font-size: 18px;
+      margin-left: 10px;
+      padding: 5px;
+    }
+    button {
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="dong">
+    <h2>A: </h2>
+    <input type="number" id="A">
+  </div>
+  <div class="dong">
+    <h2>B: </h2>
+    <input type="number" id="B">
+  </div>
+  <div class="dong">
+    <button onclick="tinh('+')">+</button>
+    <button onclick="tinh('-')">-</button>
+    <button onclick="tinh('*')">*</button>
+    <button onclick="tinh('/')">/</button>
+  </div>
+  <div class="dong">
+    <h2>Kết quả: </h2>
+    <input type="text" id="KQ" readonly>
+  </div>
+
+  <script>
+    function tinh(phepToan) {
+      const a = parseFloat(document.getElementById("A").value);
+      const b = parseFloat(document.getElementById("B").value);
+      let ketQua = '';
+
+      if (isNaN(a) || isNaN(b)) {
+        ketQua = "Vui lòng nhập số hợp lệ";
+      } else {
+        switch (phepToan) {
+          case '+':
+            ketQua = a + b;
+            break;
+          case '-':
+            ketQua = a - b;
+            break;
+          case '*':
+            ketQua = a * b;
+            break;
+          case '/':
+            ketQua = b !== 0 ? (a / b) : "Không thể chia cho 0";
+            break;
+        }
+      }
+
+      document.getElementById("KQ").value = ketQua;
+    }
+  </script>
+
+</body>
+</html>
