@@ -1,3 +1,5 @@
+###Hướng dẫn giải XSS Game: https://github.com/JannisKirschner/Google-XSS-Game
+
 ###CTF1 -  Customer List
 - Chuyển qua chế độ view-source
 - Lấy link dẫn ở ajax /CTF1/CustomerInfo
